@@ -1,0 +1,24 @@
+diff -u 32/opensslconf.h universal/opensslconf.h
+--- 32/opensslconf.h	2017-12-04 12:02:45.950182177 +0000
++++ universal/opensslconf.h	2017-12-04 12:07:27.487041246 +0000
+@@ -158,12 +158,20 @@
+  * The following are cipher-specific, but are part of the public API.
+  */
+ #if !defined(OPENSSL_SYS_UEFI)
++#ifdef __LP64__
++# undef BN_LLONG
++/* Only one for the following should be defined */
++# define SIXTY_FOUR_BIT_LONG
++# undef SIXTY_FOUR_BIT
++# undef THIRTY_TWO_BIT
++#else
+ # define BN_LLONG
+ /* Only one for the following should be defined */
+ # undef SIXTY_FOUR_BIT_LONG
+ # undef SIXTY_FOUR_BIT
+ # define THIRTY_TWO_BIT
+ #endif
++#endif
+ 
+ #define RC4_INT unsigned int
+ 
